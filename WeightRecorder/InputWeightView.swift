@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct InputWeightView: View {
   @State private var weight = 521
   
   @State private var isSaving = false
@@ -73,5 +73,5 @@ struct ContentView: View {
 }
 
 #Preview {
-  ContentView()
+  InputWeightView()
 }
