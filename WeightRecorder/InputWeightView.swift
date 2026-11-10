@@ -68,7 +68,16 @@ struct InputWeightView: View {
 
   @MainActor
   private func saveWeight() async {
-    // TODO: - prepare data and call healthStore.save(...) here
+    isSaving = true
+    defer { isSaving = false }
+    
+    do {
+      let weight = Double(self.weight) / 10
+      try await healthStore.save(weight: weight)
+    } catch {
+      errorMessage = error.localizedDescription
+      showsError = true
+    }
   }
 }
 
