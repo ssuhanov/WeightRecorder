@@ -34,7 +34,8 @@ struct InputWeightView: View {
       Spacer()
       Spacer()
       
-      Text("Input your weight:")
+      Text("Weight:")
+        .font(.largeTitle.bold())
       
       Picker("Weight", selection: $weight) {
         ForEach(500...1000, id: \.self) { value in
