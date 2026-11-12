@@ -34,6 +34,10 @@ final class HealthStore {
       return result
     }()
     
+    guard !types.isEmpty else {
+      throw SaveError.noMeasurements
+    }
+    
     try await store.requestAuthorization(toShare: types, read: [])
     
     guard types.allSatisfy({
@@ -87,13 +91,16 @@ final class HealthStore {
 private enum SaveError: LocalizedError {
   case unavailable
   case permissionDenied
+  case noMeasurements
   
   var errorDescription: String? {
     switch self {
     case .unavailable:
       return "Health data is unavailable on this device."
     case .permissionDenied:
-      return "Allow WeightRecorder to write Weight in the Health app's permissions."
+      return "Allow WeightRecorder to write Weight and BMI in the Health app's permissions."
+    case .noMeasurements:
+      return "No data to save."
     }
   }
 }

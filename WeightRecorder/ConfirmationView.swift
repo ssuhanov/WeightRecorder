@@ -24,7 +24,7 @@ struct ConfirmationView: View {
     } else {
       confirmationForm
         .navigationBarBackButtonHidden(isSaving)
-        .alert("Couldn't save weight", isPresented: $showsError) {
+        .alert("Couldn't save measurements", isPresented: $showsError) {
           Button("OK", role: .cancel) {}
         } message: {
           Text(errorMessage ?? "Please try again.")
