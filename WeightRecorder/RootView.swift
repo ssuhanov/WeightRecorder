@@ -47,7 +47,7 @@ struct RootView: View {
             }
         }
       } else {
-        ProgressView("Reading prvious measurements...")
+        ProgressView("Reading previous measurements...")
       }
     }
     .task {
