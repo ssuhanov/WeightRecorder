@@ -10,14 +10,12 @@ import HealthKit
 
 @MainActor
 final class HealthLoader {
-  var height: Int?
-  
   private let store = HKHealthStore()
   
   private let heightType = HKQuantityType(.height)
   private let weightType = HKQuantityType(.bodyMass)
   private let bmiType = HKQuantityType(.bodyMassIndex)
-
+  
   func loadInitialData() async throws -> InputData {
     guard HKHealthStore.isHealthDataAvailable() else {
       throw LoadError.unavailable
@@ -27,13 +25,14 @@ final class HealthLoader {
     
     try await store.requestAuthorization(toShare: [], read: readTypes)
     
-    height = try await latestValue(for: heightType, unit: .meter())
+    let height = try await latestValue(for: heightType, unit: .meterUnit(with: .centi))
     let weight = try await latestValue(for: weightType, unit: .gramUnit(with: .kilo))
     let bmi = try await latestValue(for: bmiType, unit: .count())
     
     let defaults = InputData()
     
     return InputData(
+      height: height,
       weight: weight ?? defaults.weight,
       bmi: bmi ?? defaults.bmi
     )
