@@ -11,16 +11,43 @@ struct InputBmiView: View {
   var inputData: InputData
   let onNext: () -> Void
   
+  @State private var bmi = 256
+  
   var body: some View {
-    Text("BMI Input will be here")
-    
-    Button("Next") {
-      inputData.bmi = 123
-      onNext()
+    inputBmiForm
+      .padding(24)
+  }
+  
+  private var inputBmiForm: some View {
+    VStack(spacing: 24) {
+      Spacer()
+      Spacer()
+      
+      Text("BMI:")
+        .font(.largeTitle.bold())
+      
+      Picker("BMI", selection: $bmi) {
+        ForEach(100...1000, id: \.self) { value in
+          Text("\(Double(value) / 10, format: .number.precision(.fractionLength(1)))")
+            .tag(value)
+        }
+      }
+      .pickerStyle(.wheel)
+      .frame(height: 220)
+      
+      Spacer()
+      
+      Button("Next") {
+        inputData.bmi = bmi
+        onNext()
+      }
+      .buttonStyle(.borderedProminent)
+      .controlSize(.large)
+      .frame(maxWidth: .infinity)
+      
+      Spacer()
+      Spacer()
     }
-    .buttonStyle(.borderedProminent)
-    .controlSize(.large)
-    .frame(maxWidth: .infinity)
   }
 }
 
