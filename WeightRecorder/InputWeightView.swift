@@ -8,24 +8,14 @@
 import SwiftUI
 
 struct InputWeightView: View {
+  @State var inputData: InputData
   let onNext: () -> Void
   
   @State private var weight = 521
   
-  @State private var isSaving = false
-  @State private var errorMessage: String?
-  @State private var showsError = false
-  
-  @State private var healthStore = HealthStore()
-  
   var body: some View {
     inputWeightForm
       .padding(24)
-      .alert("Couldn't save weight", isPresented: $showsError) {
-        Button("OK", role: .cancel) {}
-      } message: {
-        Text(errorMessage ?? "Please try again.")
-      }
   }
   
   private var inputWeightForm: some View {
@@ -47,14 +37,9 @@ struct InputWeightView: View {
       
       Spacer()
       
-      if isSaving {
-        ProgressView("Saving to Apple Health...")
-      }
-      
-      Button("Done") {
-        Task {
-          await saveWeight()
-        }
+      Button("Next") {
+        inputData.weight = weight
+        onNext()
       }
       .buttonStyle(.borderedProminent)
       .controlSize(.large)
@@ -63,25 +48,9 @@ struct InputWeightView: View {
       Spacer()
       Spacer()
     }
-    .disabled(isSaving)
-  }
-
-  @MainActor
-  private func saveWeight() async {
-    isSaving = true
-    defer { isSaving = false }
-    
-    do {
-      let weight = Double(self.weight) / 10
-      try await healthStore.save(weight: weight)
-      onNext()
-    } catch {
-      errorMessage = error.localizedDescription
-      showsError = true
-    }
   }
 }
 
 #Preview {
-  InputWeightView(onNext: { })
+  InputWeightView(inputData: InputData()) {}
 }
