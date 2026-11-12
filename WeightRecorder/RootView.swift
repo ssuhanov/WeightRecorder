@@ -15,6 +15,11 @@ enum Route: Hashable {
 class InputData {
   var weight: Int?
   var bmi: Int?
+  
+  init(weight: Int? = nil, bmi: Int? = nil) {
+    self.weight = weight
+    self.bmi = bmi
+  }
 }
 
 struct RootView: View {

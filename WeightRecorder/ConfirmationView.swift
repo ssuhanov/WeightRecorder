@@ -14,9 +14,9 @@ struct ConfirmationView: View {
   @State private var errorMessage: String?
   @State private var showsError = false
   @State private var isDone = false
-
+  
   @State private var healthStore = HealthStore()
-
+  
   var body: some View {
     confirmationForm
       .navigationBarBackButtonHidden(isDone)
@@ -31,34 +31,36 @@ struct ConfirmationView: View {
     VStack(spacing: 24) {
       Spacer()
       
-      Image(systemName: "checkmark.circle.fill")
-        .font(.system(size: 64))
-        .foregroundStyle(.green)
+      if let weight = inputData.weight {
+        Text("Weight: \(Double(weight) / 10, format: .number.precision(.fractionLength(1))) \("kg")")
+          .font(.largeTitle.bold())
+      }
+      
+      if let bmi = inputData.bmi {
+        Text("BMI: \(Double(bmi) / 10, format: .number.precision(.fractionLength(1)))")
+          .font(.largeTitle.bold())
+      }
       
       if isSaving {
         ProgressView("Saving to Apple Health...")
       }
       
-      Text("Saved to Apple Health (really?)")
-        .font(.title2.bold())
-      
-      Button("Done") {
+      Button("Save to Health") {
         Task {
           await saveWeight()
           isDone = true
         }
-        // after pressing this button navigation stack should not be able to go back
       }
       .buttonStyle(.borderedProminent)
       .controlSize(.large)
       .frame(maxWidth: .infinity)
-      // .disabled(isDone)
+      .disabled(isDone)
       
       Spacer()
     }
     .disabled(isSaving)
   }
-
+  
   @MainActor
   private func saveWeight() async {
     isSaving = true
@@ -74,5 +76,5 @@ struct ConfirmationView: View {
 }
 
 #Preview {
-  ConfirmationView(inputData: InputData())
+  ConfirmationView(inputData: InputData(weight: 754, bmi: 234))
 }

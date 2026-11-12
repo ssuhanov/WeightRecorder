@@ -13,29 +13,75 @@ final class HealthStore {
   private let store = HKHealthStore()
   
   private let weightType = HKQuantityType(.bodyMass)
+  private let bmiType = HKQuantityType(.bodyMassIndex)
   
-  func save(weight: Double) async throws {
+  func save(inputData: InputData) async throws {
+    // throw SaveError.unavailable
     guard HKHealthStore.isHealthDataAvailable() else {
       throw SaveError.unavailable
     }
     
-    let types: Set<HKSampleType> = [weightType]
+    let types: Set<HKSampleType> = {
+      var result: Set<HKSampleType> = []
+      
+      if inputData.weight != nil {
+        result.insert(weightType)
+      }
+      
+      if inputData.bmi != nil {
+        result.insert(bmiType)
+      }
+      
+      return result
+    }()
+    
     try await store.requestAuthorization(toShare: types, read: [])
     
-    guard store.authorizationStatus(for: weightType) == .sharingAuthorized else {
+    guard types.allSatisfy({
+      store.authorizationStatus(for: $0) == .sharingAuthorized
+    }) else {
       throw SaveError.permissionDenied
     }
     
+    
     let date: Date = .now
     
-    let sample = HKQuantitySample(
-      type: weightType,
-      quantity: HKQuantity(unit: .gramUnit(with: .kilo), doubleValue: weight),
-      start: date,
-      end: date
-    )
     
-    try await store.save(sample)
+    let samples: [HKObject] = {
+      var result: [HKObject] = []
+      
+      if let weight = inputData.weight {
+        result.append(
+          HKQuantitySample(
+            type: weightType,
+            quantity: HKQuantity(
+              unit: .gramUnit(with: .kilo),
+              doubleValue: Double(weight) / 10
+            ),
+            start: date,
+            end: date
+          )
+        )
+      }
+      
+      if let bmi = inputData.bmi {
+        result.append(
+          HKQuantitySample(
+            type: bmiType,
+            quantity: HKQuantity(
+              unit: .count(),
+              doubleValue: Double(bmi) / 10
+            ),
+            start: date,
+            end: date
+          )
+        )
+      }
+      
+      return result
+    }()
+    
+    try await store.save(samples)
   }
 }
 
