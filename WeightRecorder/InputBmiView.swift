@@ -16,7 +16,13 @@ struct InputBmiView: View {
   init(inputData: InputData, onNext: @escaping () -> Void) {
     self.inputData = inputData
     self.onNext = onNext
-    self.bmi = inputData.bmi
+    if let heightInCentimeters = inputData.heightInCentimeters {
+      let heightInMeters = heightInCentimeters / 100
+      let bmi = inputData.weightInKilos / (heightInMeters * heightInMeters)
+      self.bmi = Int((bmi * 10).rounded())
+    } else {
+      self.bmi = Int((inputData.bmi * 10).rounded())
+    }
   }
   
   var body: some View {
@@ -44,7 +50,7 @@ struct InputBmiView: View {
       Spacer()
       
       Button("Next") {
-        inputData.bmi = bmi
+        inputData.bmi = Double(bmi) / 10
         onNext()
       }
       .buttonStyle(.borderedProminent)

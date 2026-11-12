@@ -25,20 +25,20 @@ final class HealthLoader {
     
     try await store.requestAuthorization(toShare: [], read: readTypes)
     
-    let height = try await latestValue(for: heightType, unit: .meterUnit(with: .centi))
-    let weight = try await latestValue(for: weightType, unit: .gramUnit(with: .kilo))
+    let heightInCentimeters = try await latestValue(for: heightType, unit: .meterUnit(with: .centi))
+    let weightInKilos = try await latestValue(for: weightType, unit: .gramUnit(with: .kilo))
     let bmi = try await latestValue(for: bmiType, unit: .count())
     
     let defaults = InputData()
     
     return InputData(
-      height: height,
-      weight: weight ?? defaults.weight,
+      heightInCentimeters: heightInCentimeters,
+      weightInKilos: weightInKilos ?? defaults.weightInKilos,
       bmi: bmi ?? defaults.bmi
     )
   }
   
-  private func latestValue(for type: HKQuantityType, unit: HKUnit) async throws -> Int? {
+  private func latestValue(for type: HKQuantityType, unit: HKUnit) async throws -> Double? {
     let query = HKSampleQueryDescriptor(
       predicates: [.quantitySample(type: type)],
       sortDescriptors: [SortDescriptor(\.endDate, order: .reverse)],
@@ -51,9 +51,7 @@ final class HealthLoader {
       return nil
     }
     
-    let value = sample.quantity.doubleValue(for: unit)
-    
-    return Int((value * 10).rounded())
+    return sample.quantity.doubleValue(for: unit)
   }
 }
 

@@ -35,10 +35,10 @@ struct ConfirmationView: View {
   private var confirmationForm: some View {
     VStack(spacing: 24) {
       VStack(spacing: 12) {
-        Text("Weight: \(Double(inputData.weight) / 10, format: .number.precision(.fractionLength(1))) \("kg")")
+        Text("Weight: \(inputData.weightInKilos, format: .number.precision(.fractionLength(1))) \("kg")")
           .font(.title.bold())
         
-        Text("BMI: \(Double(inputData.bmi) / 10, format: .number.precision(.fractionLength(1)))")
+        Text("BMI: \(inputData.bmi, format: .number.precision(.fractionLength(1)))")
           .font(.title.bold())
       }
       
@@ -64,10 +64,10 @@ struct ConfirmationView: View {
         .font(.title2.bold())
       
       VStack(spacing: 12) {
-        Text("Weight: \(Double(inputData.weight) / 10, format: .number.precision(.fractionLength(1))) \("kg")")
+        Text("Weight: \(inputData.weightInKilos, format: .number.precision(.fractionLength(1))) \("kg")")
           .font(.body)
         
-        Text("BMI: \(Double(inputData.bmi) / 10, format: .number.precision(.fractionLength(1)))")
+        Text("BMI: \(inputData.bmi, format: .number.precision(.fractionLength(1)))")
           .font(.body)
       }
       
@@ -93,5 +93,5 @@ struct ConfirmationView: View {
 }
 
 #Preview {
-  ConfirmationView(inputData: InputData(weight: 754, bmi: 234))
+  ConfirmationView(inputData: InputData(weightInKilos: 75.4, bmi: 23.4))
 }

@@ -37,7 +37,7 @@ final class HealthStore {
         type: weightType,
         quantity: HKQuantity(
           unit: .gramUnit(with: .kilo),
-          doubleValue: Double(inputData.weight) / 10
+          doubleValue: inputData.weightInKilos
         ),
         start: date,
         end: date
@@ -46,7 +46,7 @@ final class HealthStore {
         type: bmiType,
         quantity: HKQuantity(
           unit: .count(),
-          doubleValue: Double(inputData.bmi) / 10
+          doubleValue: inputData.bmi
         ),
         start: date,
         end: date

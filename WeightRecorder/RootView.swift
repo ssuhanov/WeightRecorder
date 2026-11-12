@@ -13,13 +13,13 @@ enum Route: Hashable {
 }
 
 final class InputData {
-  var height: Int?
-  var weight: Int
-  var bmi: Int
+  var heightInCentimeters: Double?
+  var weightInKilos: Double
+  var bmi: Double
   
-  init(height: Int? = nil, weight: Int = 731, bmi: Int = 234) {
-    self.height = height
-    self.weight = weight
+  init(heightInCentimeters: Double? = nil, weightInKilos: Double = 73.1, bmi: Double = 23.4) {
+    self.heightInCentimeters = heightInCentimeters
+    self.weightInKilos = weightInKilos
     self.bmi = bmi
   }
 }

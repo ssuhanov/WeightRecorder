@@ -16,7 +16,7 @@ struct InputWeightView: View {
   init(inputData: InputData, onNext: @escaping () -> Void) {
     self.inputData = inputData
     self.onNext = onNext
-    self.weight = inputData.weight
+    self.weight = Int((inputData.weightInKilos * 10).rounded())
   }
   
   var body: some View {
@@ -44,7 +44,7 @@ struct InputWeightView: View {
       Spacer()
       
       Button("Next") {
-        inputData.weight = weight
+        inputData.weightInKilos = Double(weight) / 10
         onNext()
       }
       .buttonStyle(.borderedProminent)
