@@ -35,15 +35,11 @@ struct ConfirmationView: View {
   private var confirmationForm: some View {
     VStack(spacing: 24) {
       VStack(spacing: 12) {
-        if let weight = inputData.weight {
-          Text("Weight: \(Double(weight) / 10, format: .number.precision(.fractionLength(1))) \("kg")")
-            .font(.title.bold())
-        }
+        Text("Weight: \(Double(inputData.weight) / 10, format: .number.precision(.fractionLength(1))) \("kg")")
+          .font(.title.bold())
         
-        if let bmi = inputData.bmi {
-          Text("BMI: \(Double(bmi) / 10, format: .number.precision(.fractionLength(1)))")
-            .font(.title.bold())
-        }
+        Text("BMI: \(Double(inputData.bmi) / 10, format: .number.precision(.fractionLength(1)))")
+          .font(.title.bold())
       }
       
       if isSaving {
@@ -68,15 +64,11 @@ struct ConfirmationView: View {
         .font(.title2.bold())
       
       VStack(spacing: 12) {
-        if let weight = inputData.weight {
-          Text("Weight: \(Double(weight) / 10, format: .number.precision(.fractionLength(1))) \("kg")")
-            .font(.body)
-        }
+        Text("Weight: \(Double(inputData.weight) / 10, format: .number.precision(.fractionLength(1))) \("kg")")
+          .font(.body)
         
-        if let bmi = inputData.bmi {
-          Text("BMI: \(Double(bmi) / 10, format: .number.precision(.fractionLength(1)))")
-            .font(.body)
-        }
+        Text("BMI: \(Double(inputData.bmi) / 10, format: .number.precision(.fractionLength(1)))")
+          .font(.body)
       }
       
       Image(systemName: "checkmark.circle.fill")

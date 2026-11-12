@@ -12,11 +12,11 @@ enum Route: Hashable {
   case confirmation
 }
 
-class InputData {
-  var weight: Int?
-  var bmi: Int?
+final class InputData {
+  var weight: Int
+  var bmi: Int
   
-  init(weight: Int? = nil, bmi: Int? = nil) {
+  init(weight: Int = 731, bmi: Int = 234) {
     self.weight = weight
     self.bmi = bmi
   }

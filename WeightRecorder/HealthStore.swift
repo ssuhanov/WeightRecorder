@@ -20,23 +20,7 @@ final class HealthStore {
       throw SaveError.unavailable
     }
     
-    let types: Set<HKSampleType> = {
-      var result: Set<HKSampleType> = []
-      
-      if inputData.weight != nil {
-        result.insert(weightType)
-      }
-      
-      if inputData.bmi != nil {
-        result.insert(bmiType)
-      }
-      
-      return result
-    }()
-    
-    guard !types.isEmpty else {
-      throw SaveError.noMeasurements
-    }
+    let types: Set<HKSampleType> = [weightType, bmiType]
     
     try await store.requestAuthorization(toShare: types, read: [])
     
@@ -46,43 +30,28 @@ final class HealthStore {
       throw SaveError.permissionDenied
     }
     
-    
     let date: Date = .now
     
-    
-    let samples: [HKObject] = {
-      var result: [HKObject] = []
-      
-      if let weight = inputData.weight {
-        result.append(
-          HKQuantitySample(
-            type: weightType,
-            quantity: HKQuantity(
-              unit: .gramUnit(with: .kilo),
-              doubleValue: Double(weight) / 10
-            ),
-            start: date,
-            end: date
-          )
-        )
-      }
-      
-      if let bmi = inputData.bmi {
-        result.append(
-          HKQuantitySample(
-            type: bmiType,
-            quantity: HKQuantity(
-              unit: .count(),
-              doubleValue: Double(bmi) / 10
-            ),
-            start: date,
-            end: date
-          )
-        )
-      }
-      
-      return result
-    }()
+    let samples: [HKObject] = [
+      HKQuantitySample(
+        type: weightType,
+        quantity: HKQuantity(
+          unit: .gramUnit(with: .kilo),
+          doubleValue: Double(inputData.weight) / 10
+        ),
+        start: date,
+        end: date
+      ),
+      HKQuantitySample(
+        type: bmiType,
+        quantity: HKQuantity(
+          unit: .count(),
+          doubleValue: Double(inputData.bmi) / 10
+        ),
+        start: date,
+        end: date
+      )
+    ]
     
     try await store.save(samples)
   }
@@ -91,7 +60,6 @@ final class HealthStore {
 private enum SaveError: LocalizedError {
   case unavailable
   case permissionDenied
-  case noMeasurements
   
   var errorDescription: String? {
     switch self {
@@ -99,8 +67,6 @@ private enum SaveError: LocalizedError {
       return "Health data is unavailable on this device."
     case .permissionDenied:
       return "Allow WeightRecorder to write Weight and BMI in the Health app's permissions."
-    case .noMeasurements:
-      return "No data to save."
     }
   }
 }

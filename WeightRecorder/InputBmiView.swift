@@ -16,7 +16,7 @@ struct InputBmiView: View {
   init(inputData: InputData, onNext: @escaping () -> Void) {
     self.inputData = inputData
     self.onNext = onNext
-    self.bmi = inputData.bmi ?? 234
+    self.bmi = inputData.bmi
   }
   
   var body: some View {

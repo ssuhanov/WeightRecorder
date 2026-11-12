@@ -16,7 +16,7 @@ struct InputWeightView: View {
   init(inputData: InputData, onNext: @escaping () -> Void) {
     self.inputData = inputData
     self.onNext = onNext
-    self.weight = inputData.weight ?? 731
+    self.weight = inputData.weight
   }
   
   var body: some View {
