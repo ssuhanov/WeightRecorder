@@ -40,6 +40,7 @@
         "DEVELOPMENT_TEAM": "3D3JF5D29C",
         "ENABLE_PREVIEWS": "YES",
         "GENERATE_INFOPLIST_FILE": "YES",
+        "INFOPLIST_KEY_NSHealthShareUsageDescription": "Read your latest height, weight, BMI, and body fat data from Apple Health.",
         "INFOPLIST_KEY_NSHealthUpdateUsageDescription": "Save the weight, BMI, and body fat measurements you enter to Apple Health.",
         "INFOPLIST_KEY_UIApplicationSceneManifest_Generation": "YES",
         "INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents": "YES",
