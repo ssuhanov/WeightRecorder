@@ -16,7 +16,6 @@ final class HealthStore {
   private let bmiType = HKQuantityType(.bodyMassIndex)
   
   func save(inputData: InputData) async throws {
-    // throw SaveError.unavailable
     guard HKHealthStore.isHealthDataAvailable() else {
       throw SaveError.unavailable
     }
