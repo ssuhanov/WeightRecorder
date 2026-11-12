@@ -20,9 +20,10 @@ struct ConfirmationView: View {
   var body: some View {
     if isDone {
       successForm
-        .navigationBarBackButtonHidden(isDone)
+        .navigationBarBackButtonHidden()
     } else {
       confirmationForm
+        .navigationBarBackButtonHidden(isSaving)
         .alert("Couldn't save weight", isPresented: $showsError) {
           Button("OK", role: .cancel) {}
         } message: {
@@ -51,13 +52,12 @@ struct ConfirmationView: View {
       
       Button("Save to Health") {
         Task {
-          await saveWeight()
+          await saveMeasurements()
         }
       }
       .buttonStyle(.borderedProminent)
       .controlSize(.large)
       .frame(maxWidth: .infinity)
-      .disabled(isDone)
     }
     .disabled(isSaving)
   }
@@ -86,7 +86,7 @@ struct ConfirmationView: View {
   }
   
   @MainActor
-  private func saveWeight() async {
+  private func saveMeasurements() async {
     isSaving = true
     defer { isSaving = false }
     
