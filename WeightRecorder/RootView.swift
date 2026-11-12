@@ -24,7 +24,7 @@ class InputData {
 
 struct RootView: View {
   @State private var path: [Route] = []
-  private var inputData = InputData()
+  @State private var inputData = InputData()
   
   var body: some View {
     NavigationStack(path: $path) {

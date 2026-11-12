@@ -8,10 +8,16 @@
 import SwiftUI
 
 struct InputWeightView: View {
-  @State var inputData: InputData
-  let onNext: () -> Void
+  private let inputData: InputData
+  private let onNext: () -> Void
   
-  @State private var weight = 521
+  @State private var weight: Int
+  
+  init(inputData: InputData, onNext: @escaping () -> Void) {
+    self.inputData = inputData
+    self.onNext = onNext
+    self.weight = inputData.weight ?? 731
+  }
   
   var body: some View {
     inputWeightForm

@@ -8,10 +8,16 @@
 import SwiftUI
 
 struct InputBmiView: View {
-  var inputData: InputData
-  let onNext: () -> Void
+  private let inputData: InputData
+  private let onNext: () -> Void
   
-  @State private var bmi = 256
+  @State private var bmi: Int
+  
+  init(inputData: InputData, onNext: @escaping () -> Void) {
+    self.inputData = inputData
+    self.onNext = onNext
+    self.bmi = inputData.bmi ?? 234
+  }
   
   var body: some View {
     inputBmiForm
