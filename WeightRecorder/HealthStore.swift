@@ -22,7 +22,7 @@ final class HealthStore {
     
     let types: Set<HKSampleType> = [weightType, bmiType]
     
-    try await store.requestAuthorization(toShare: types, read: [])
+    try await store.requestAuthorization(toShare: types, read: types)
     
     guard types.allSatisfy({
       store.authorizationStatus(for: $0) == .sharingAuthorized

@@ -21,13 +21,13 @@ final class HealthLoader {
       throw LoadError.unavailable
     }
     
-    let readTypes: Set<HKObjectType> = [heightType, weightType, bmiType]
+    let readTypes: Set<HKSampleType> = [heightType, weightType, bmiType]
     
-    try await store.requestAuthorization(toShare: [], read: readTypes)
+    try await store.requestAuthorization(toShare: readTypes, read: readTypes)
     
-    let heightInCentimeters = try await latestValue(for: heightType, unit: .meterUnit(with: .centi))
-    let weightInKilos = try await latestValue(for: weightType, unit: .gramUnit(with: .kilo))
-    let bmi = try await latestValue(for: bmiType, unit: .count())
+    let heightInCentimeters = try? await latestValue(for: heightType, unit: .meterUnit(with: .centi))
+    let weightInKilos = try? await latestValue(for: weightType, unit: .gramUnit(with: .kilo))
+    let bmi = try? await latestValue(for: bmiType, unit: .count())
     
     let defaults = InputData()
     
