@@ -40,6 +40,9 @@ struct ConfirmationView: View {
         
         Text("BMI: \(inputData.bmi, format: .number.precision(.fractionLength(1)))")
           .font(.title.bold())
+        
+        Text("Body Fat: \(inputData.bodyFatPercentage, format: .percent.precision(.fractionLength(1)))")
+          .font(.title.bold())
       }
       
       if isSaving {
@@ -68,6 +71,9 @@ struct ConfirmationView: View {
           .font(.body)
         
         Text("BMI: \(inputData.bmi, format: .number.precision(.fractionLength(1)))")
+          .font(.body)
+
+        Text("Body Fat: \(inputData.bodyFatPercentage, format: .percent.precision(.fractionLength(1)))")
           .font(.body)
       }
       

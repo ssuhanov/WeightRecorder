@@ -15,26 +15,29 @@ final class HealthLoader {
   private let heightType = HKQuantityType(.height)
   private let weightType = HKQuantityType(.bodyMass)
   private let bmiType = HKQuantityType(.bodyMassIndex)
+  private let bodyFatPercentageType = HKQuantityType(.bodyFatPercentage)
   
   func loadInitialData() async throws -> InputData {
     guard HKHealthStore.isHealthDataAvailable() else {
       throw LoadError.unavailable
     }
     
-    let readTypes: Set<HKSampleType> = [heightType, weightType, bmiType]
+    let readTypes: Set<HKSampleType> = [heightType, weightType, bmiType, bodyFatPercentageType]
     
     try await store.requestAuthorization(toShare: readTypes, read: readTypes)
     
     let heightInCentimeters = try? await latestValue(for: heightType, unit: .meterUnit(with: .centi))
     let weightInKilos = try? await latestValue(for: weightType, unit: .gramUnit(with: .kilo))
     let bmi = try? await latestValue(for: bmiType, unit: .count())
+    let bodyFatPercentage = try? await latestValue(for: bodyFatPercentageType, unit: .percent())
     
     let defaults = InputData()
     
     return InputData(
       heightInCentimeters: heightInCentimeters,
       weightInKilos: weightInKilos ?? defaults.weightInKilos,
-      bmi: bmi ?? defaults.bmi
+      bmi: bmi ?? defaults.bmi,
+      bodyFatPercentage: bodyFatPercentage ?? defaults.bodyFatPercentage
     )
   }
   

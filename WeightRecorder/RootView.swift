@@ -9,6 +9,7 @@ import SwiftUI
 
 enum Route: Hashable {
   case bmi
+  case bodyFatPercentage
   case confirmation
 }
 
@@ -16,11 +17,18 @@ final class InputData {
   var heightInCentimeters: Double?
   var weightInKilos: Double
   var bmi: Double
+  var bodyFatPercentage: Double
   
-  init(heightInCentimeters: Double? = nil, weightInKilos: Double = 73.1, bmi: Double = 23.4) {
+  init(
+    heightInCentimeters: Double? = nil,
+    weightInKilos: Double = 73.1,
+    bmi: Double = 23.4,
+    bodyFatPercentage: Double = 16.2
+  ) {
     self.heightInCentimeters = heightInCentimeters
     self.weightInKilos = weightInKilos
     self.bmi = bmi
+    self.bodyFatPercentage = bodyFatPercentage
   }
 }
 
@@ -41,7 +49,8 @@ struct RootView: View {
             .navigationTitle("WeightRecorder")
             .navigationDestination(for: Route.self) { route in
               switch route {
-              case .bmi: InputBmiView(inputData: inputData) { path.append(.confirmation) }
+              case .bmi: InputBmiView(inputData: inputData) { path.append(.bodyFatPercentage) }
+              case .bodyFatPercentage: InputBodyFatPercentageView(inputData: inputData) { path.append(.confirmation) }
               case .confirmation: ConfirmationView(inputData: inputData)
               }
             }
