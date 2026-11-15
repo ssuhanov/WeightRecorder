@@ -1,0 +1,9 @@
+{
+  "id" : "e7a1d7f5-4b58-46ac-a448-4af75f869723",
+  "targets" : [
+    {
+      "id" : "0d8fcc85-62de-4a0f-b14e-1c76c12110eb",
+      "name" : "WeightRecorder"
+    }
+  ]
+}
