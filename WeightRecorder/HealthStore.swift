@@ -15,13 +15,14 @@ final class HealthStore {
   private let weightType = HKQuantityType(.bodyMass)
   private let bmiType = HKQuantityType(.bodyMassIndex)
   private let bodyFatPercentageType = HKQuantityType(.bodyFatPercentage)
+  private let leanBodyMassType = HKQuantityType(.leanBodyMass)
   
   func save(inputData: InputData) async throws {
     guard HKHealthStore.isHealthDataAvailable() else {
       throw SaveError.unavailable
     }
     
-    let types: Set<HKSampleType> = [weightType, bmiType, bodyFatPercentageType]
+    let types: Set<HKSampleType> = [weightType, bmiType, bodyFatPercentageType, leanBodyMassType]
     
     try await store.requestAuthorization(toShare: types, read: types)
     
@@ -57,6 +58,15 @@ final class HealthStore {
         quantity: HKQuantity(
           unit: .percent(),
           doubleValue: inputData.bodyFatPercentage
+        ),
+        start: date,
+        end: date
+      ),
+      HKQuantitySample(
+        type: leanBodyMassType,
+        quantity: HKQuantity(
+          unit: .gramUnit(with: .kilo),
+          doubleValue: inputData.leanBodyMassInKilos
         ),
         start: date,
         end: date

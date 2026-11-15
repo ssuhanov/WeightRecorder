@@ -43,6 +43,9 @@ struct ConfirmationView: View {
         
         Text("Body Fat: \(inputData.bodyFatPercentage, format: .percent.precision(.fractionLength(1)))")
           .font(.title.bold())
+        
+        Text("Lean Body Mass: \(inputData.leanBodyMassInKilos, format: .number.precision(.fractionLength(1))) \("kg")")
+          .font(.title.bold())
       }
       
       if isSaving {
@@ -74,6 +77,9 @@ struct ConfirmationView: View {
           .font(.body)
 
         Text("Body Fat: \(inputData.bodyFatPercentage, format: .percent.precision(.fractionLength(1)))")
+          .font(.body)
+        
+        Text("Lean Body Mass: \(inputData.leanBodyMassInKilos, format: .number.precision(.fractionLength(1))) \("kg")")
           .font(.body)
       }
       
