@@ -36,7 +36,7 @@ struct InputBmiView: View {
         .font(.largeTitle.bold())
       
       Picker("BMI", selection: $bmi) {
-        ForEach(min(100, bmi)...max(1000, bmi), id: \.self) { value in
+        ForEach(bmiRange, id: \.self) { value in
           Text("\(Double(value) / 10, format: .number.precision(.fractionLength(1)))")
             .tag(value)
         }
