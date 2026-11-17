@@ -27,7 +27,7 @@ struct RootView: View {
               case .bmi: InputBmiView(inputData: inputData) { path.append(.bodyFatPercentage) }
               case .bodyFatPercentage: InputBodyFatPercentageView(inputData: inputData) { path.append(.leanBodyMass) }
               case .leanBodyMass: InputLeanBodyMassView(inputData: inputData) { path.append(.confirmation) }
-              case .confirmation: InputWeightView(inputData: inputData) { print("nothing") }
+              case .confirmation: ConfirmationView(inputData: inputData)
               }
             }
         }

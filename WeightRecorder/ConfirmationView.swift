@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ConfirmationView: View {
-  let inputData: InputData
+  private let inputData: InputData
   
   @State private var isSaving = false
   @State private var errorMessage: String?
@@ -16,6 +16,10 @@ struct ConfirmationView: View {
   @State private var isDone = false
   
   @State private var healthStore = HealthStore()
+  
+  init(inputData: InputData) {
+    self.inputData = inputData
+  }
   
   var body: some View {
     if isDone {
