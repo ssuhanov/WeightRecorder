@@ -25,7 +25,7 @@ struct RootView: View {
             .navigationDestination(for: NavigationRoute.self) { route in
               switch route {
               case .bmi: InputBmiView(inputData: inputData) { path.append(.bodyFatPercentage) }
-              case .bodyFatPercentage: InputWeightView(inputData: inputData) { path.append(.leanBodyMass) }
+              case .bodyFatPercentage: InputBodyFatPercentageView(inputData: inputData) { path.append(.leanBodyMass) }
               case .leanBodyMass: InputWeightView(inputData: inputData) { path.append(.confirmation) }
               case .confirmation: InputWeightView(inputData: inputData) { print("nothing") }
               }
