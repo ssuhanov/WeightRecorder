@@ -11,7 +11,22 @@
     ],
   },
   "files": [
-    { "kind": "folder", "path": "WeightRecorder", "target-membership": [ "WeightRecorder" ] },
+    {
+      "kind": "folder",
+      "path": "WeightRecorder",
+      "target-membership": [
+        "WeightRecorder",
+      ],
+      "membership-exceptions": [
+        {
+          "target": "WeightRecorderWatch Watch App",
+          "inclusions": [
+            "InputData.swift",
+            "NavigationRoute.swift",
+          ],
+        },
+      ],
+    },
     { "kind": "folder", "path": "WeightRecorderWatch Watch App", "target-membership": [ "WeightRecorderWatch Watch App" ] },
     {
       "kind": "group",

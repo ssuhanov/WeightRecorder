@@ -7,37 +7,8 @@
 
 import SwiftUI
 
-enum Route: Hashable {
-  case bmi
-  case bodyFatPercentage
-  case leanBodyMass
-  case confirmation
-}
-
-final class InputData {
-  var heightInCentimeters: Double?
-  var weightInKilos: Double
-  var bmi: Double
-  var bodyFatPercentage: Double
-  var leanBodyMassInKilos: Double
-  
-  init(
-    heightInCentimeters: Double? = nil,
-    weightInKilos: Double = 73.1,
-    bmi: Double = 23.4,
-    bodyFatPercentage: Double = 0.162,
-    leanBodyMassInKilos: Double = 62.7
-  ) {
-    self.heightInCentimeters = heightInCentimeters
-    self.weightInKilos = weightInKilos
-    self.bmi = bmi
-    self.bodyFatPercentage = bodyFatPercentage
-    self.leanBodyMassInKilos = leanBodyMassInKilos
-  }
-}
-
 struct RootView: View {
-  @State private var path: [Route] = []
+  @State private var path: [NavigationRoute] = []
   @State private var inputData = InputData()
   @State private var healthLoader = HealthLoader()
   
@@ -51,7 +22,7 @@ struct RootView: View {
         NavigationStack(path: $path) {
           InputWeightView(inputData: inputData) { path.append(.bmi) }
             .navigationTitle("WeightRecorder")
-            .navigationDestination(for: Route.self) { route in
+            .navigationDestination(for: NavigationRoute.self) { route in
               switch route {
               case .bmi: InputBmiView(inputData: inputData) { path.append(.bodyFatPercentage) }
               case .bodyFatPercentage: InputBodyFatPercentageView(inputData: inputData) { path.append(.leanBodyMass) }
