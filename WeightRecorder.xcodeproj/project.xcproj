@@ -21,8 +21,10 @@
         {
           "target": "WeightRecorderWatch Watch App",
           "inclusions": [
-            "InputData.swift",
-            "NavigationRoute.swift",
+            "Shared/HealthLoader.swift",
+            "Shared/HealthStore.swift",
+            "Shared/InputData.swift",
+            "Shared/NavigationRoute.swift",
           ],
         },
       ],
