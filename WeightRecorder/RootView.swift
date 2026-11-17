@@ -25,7 +25,7 @@ final class InputData {
     heightInCentimeters: Double? = nil,
     weightInKilos: Double = 73.1,
     bmi: Double = 23.4,
-    bodyFatPercentage: Double = 16.2,
+    bodyFatPercentage: Double = 0.162,
     leanBodyMassInKilos: Double = 62.7
   ) {
     self.heightInCentimeters = heightInCentimeters
