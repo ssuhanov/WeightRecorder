@@ -23,20 +23,26 @@ private extension View {
   }
 }
 
-struct PrimaryButton: View {
-  private let title: String
+struct PrimaryButton<Content: View>: View {
+  private let content: Content
   private let action: () -> Void
   
-  init(_ title: String, action: @escaping () -> Void) {
-    self.title = title
+  init(action: @escaping () -> Void, @ViewBuilder content: () -> Content) {
+    self.content = content()
     self.action = action
   }
   
   var body: some View {
-    Button(title, action: action)
+    Button<Content>(action: action, label: { content })
       .buttonStyle(.glassProminent)
       .largeControlSize()
       .frame(maxWidth: .infinity)
+  }
+}
+
+extension PrimaryButton where Content == Text {
+  init(_ title: String, action: @escaping () -> Void) {
+    self.init(action: action, content: { Text(title) })
   }
 }
 

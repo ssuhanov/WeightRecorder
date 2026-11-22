@@ -49,13 +49,15 @@ struct ConfirmationView: View {
       inputDataRepresentation
         .font(.title.bold())
       
-      if isSaving {
-        ProgressView("Saving to Apple Health...")
-      }
-      
-      PrimaryButton("Save to Health") {
+      PrimaryButton {
         Task {
           await saveMeasurements()
+        }
+      } content: {
+        if isSaving {
+          ProgressView()
+        } else {
+          Text("Save to Health")
         }
       }
     }
