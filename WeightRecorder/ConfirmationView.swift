@@ -22,17 +22,21 @@ struct ConfirmationView: View {
   }
   
   var body: some View {
-    if isDone {
-      successForm
-        .navigationBarBackButtonHidden()
-    } else {
-      confirmationForm
-        .navigationBarBackButtonHidden(isSaving)
-        .alert("Couldn't save measurements", isPresented: $showsError) {
-          Button("OK", role: .cancel) {}
-        } message: {
-          Text(errorMessage ?? "Please try again.")
-        }
+    ZStack {
+      if isDone {
+        successForm
+          .navigationBarBackButtonHidden()
+          .transition(.blurReplace)
+      } else {
+        confirmationForm
+          .navigationBarBackButtonHidden(isSaving)
+          .alert("Couldn't save measurements", isPresented: $showsError) {
+            Button("OK", role: .cancel) {}
+          } message: {
+            Text(errorMessage ?? "Please try again.")
+          }
+          .transition(.blurReplace)
+      }
     }
   }
   
