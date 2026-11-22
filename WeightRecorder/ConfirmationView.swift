@@ -14,6 +14,7 @@ struct ConfirmationView: View {
   @State private var errorMessage: String?
   @State private var showsError = false
   @State private var isDone = false
+  @State private var showsBadge = false
   
   @State private var healthStore = HealthStore()
   
@@ -74,8 +75,19 @@ struct ConfirmationView: View {
         .matchedGeometryEffect(id: "inputValues", in: inputValues)
       
       Image(systemName: "checkmark.circle.fill")
+        .hidden()
+        .overlay {
+          if showsBadge {
+            Image(systemName: "checkmark.circle.fill")
+              .transition(.symbolEffect(.drawOn))
+          }
+        }
         .font(.system(size: 64))
         .foregroundStyle(.green)
+    }
+    .task {
+      try? await Task.sleep(for: .milliseconds(300))
+      withAnimation { showsBadge = true }
     }
   }
   
