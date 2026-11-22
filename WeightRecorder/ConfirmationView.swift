@@ -38,6 +38,7 @@ struct ConfirmationView: View {
           .transition(.blurReplace)
       }
     }
+    .sensoryFeedback(.success, trigger: isDone)
   }
   
   private var confirmationForm: some View {
