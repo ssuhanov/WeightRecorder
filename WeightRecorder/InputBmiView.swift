@@ -28,24 +28,14 @@ struct InputBmiView: View {
   }
   
   private var inputBmiForm: some View {
-    VStack(spacing: 24) {
-      Spacer()
-      Spacer()
-      
-      Text("BMI:")
-        .font(.largeTitle.bold())
-      
-      InputDataPicker(title: "BMI", range: bmiRange, selection: $bmi)
-      
-      Spacer()
-      
-      PrimaryButton("Next") {
-        inputData.bmi = Double(bmi) / 10
-        onNext()
-      }
-      
-      Spacer()
-      Spacer()
+    InputDataForm(
+      title: "BMI",
+      range: bmiRange,
+      selection: $bmi,
+      buttonTitle: "Next"
+    ) {
+      inputData.bmi = Double(bmi) / 10
+      onNext()
     }
   }
 }

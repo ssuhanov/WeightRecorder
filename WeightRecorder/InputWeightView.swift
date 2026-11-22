@@ -28,28 +28,19 @@ struct InputWeightView: View {
   }
   
   private var inputWeightForm: some View {
-    VStack(spacing: 24) {
-      Spacer()
-      Spacer()
-      
-      Text("Weight:")
-        .font(.largeTitle.bold())
-      
-      InputDataPicker(title: "Weight", unit: "kg", range: weightRange, selection: $weight)
-      
-      Spacer()
-      
-      PrimaryButton("Next") {
-        inputData.weightInKilos = Double(weight) / 10
-        if let heightInCentimeters = inputData.heightInCentimeters, heightInCentimeters > 0.0 {
-          let heightInMeters = heightInCentimeters / 100
-          inputData.bmi = inputData.weightInKilos / (heightInMeters * heightInMeters)
-        }
-        onNext()
+    InputDataForm(
+      title: "Weight",
+      unit: "kg",
+      range: weightRange,
+      selection: $weight,
+      buttonTitle: "Next"
+    ) {
+      inputData.weightInKilos = Double(weight) / 10
+      if let heightInCentimeters = inputData.heightInCentimeters, heightInCentimeters > 0.0 {
+        let heightInMeters = heightInCentimeters / 100
+        inputData.bmi = inputData.weightInKilos / (heightInMeters * heightInMeters)
       }
-      
-      Spacer()
-      Spacer()
+      onNext()
     }
   }
 }
