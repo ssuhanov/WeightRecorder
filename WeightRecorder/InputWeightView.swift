@@ -46,7 +46,7 @@ struct InputWeightView: View {
       
       Spacer()
       
-      Button("Next") {
+      PrimaryButton("Next") {
         inputData.weightInKilos = Double(weight) / 10
         if let heightInCentimeters = inputData.heightInCentimeters, heightInCentimeters > 0.0 {
           let heightInMeters = heightInCentimeters / 100
@@ -54,9 +54,6 @@ struct InputWeightView: View {
         }
         onNext()
       }
-      .buttonStyle(.borderedProminent)
-      .controlSize(.large)
-      .frame(maxWidth: .infinity)
       
       Spacer()
       Spacer()

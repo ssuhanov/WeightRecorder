@@ -40,12 +40,10 @@ struct InputLeanBodyMassView: View {
       .labelsHidden()
       .frame(maxHeight: .infinity)
       
-      Button("Next") {
+      PrimaryButton("Next") {
         inputData.leanBodyMassInKilos = Double(leanBodyMass) / 10
         onNext()
       }
-      .buttonStyle(.borderedProminent)
-      .frame(maxWidth: .infinity)
     }
   }
 }

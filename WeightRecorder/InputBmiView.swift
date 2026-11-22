@@ -46,13 +46,10 @@ struct InputBmiView: View {
       
       Spacer()
       
-      Button("Next") {
+      PrimaryButton("Next") {
         inputData.bmi = Double(bmi) / 10
         onNext()
       }
-      .buttonStyle(.borderedProminent)
-      .controlSize(.large)
-      .frame(maxWidth: .infinity)
       
       Spacer()
       Spacer()

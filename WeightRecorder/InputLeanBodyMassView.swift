@@ -46,13 +46,10 @@ struct InputLeanBodyMassView: View {
       
       Spacer()
       
-      Button("Next") {
+      PrimaryButton("Next") {
         inputData.leanBodyMassInKilos = Double(leanBodyMass) / 10
         onNext()
       }
-      .buttonStyle(.borderedProminent)
-      .controlSize(.large)
-      .frame(maxWidth: .infinity)
       
       Spacer()
       Spacer()

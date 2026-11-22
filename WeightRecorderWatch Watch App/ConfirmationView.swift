@@ -52,13 +52,11 @@ struct ConfirmationView: View {
           ProgressView("Saving...")
         }
         
-        Button("Save to Health") {
+        PrimaryButton("Save to Health") {
           Task {
             await saveMeasurements()
           }
         }
-        .buttonStyle(.borderedProminent)
-        .frame(maxWidth: .infinity)
       }
       .padding(.horizontal, 8)
       .disabled(isSaving)

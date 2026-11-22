@@ -56,14 +56,11 @@ struct ConfirmationView: View {
         ProgressView("Saving to Apple Health...")
       }
       
-      Button("Save to Health") {
+      PrimaryButton("Save to Health") {
         Task {
           await saveMeasurements()
         }
       }
-      .buttonStyle(.borderedProminent)
-      .controlSize(.large)
-      .frame(maxWidth: .infinity)
     }
     .disabled(isSaving)
   }

@@ -25,6 +25,7 @@
             "Shared/HealthStore.swift",
             "Shared/InputData.swift",
             "Shared/NavigationRoute.swift",
+            "Shared/UIComponents/PrimaryButton.swift",
           ],
         },
       ],
