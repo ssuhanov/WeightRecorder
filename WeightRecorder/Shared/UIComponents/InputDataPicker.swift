@@ -9,14 +9,12 @@ import SwiftUI
 
 struct InputDataPicker: View {
   private let title: String
-  private let unit: String?
   private let unitText: String
   private let range: ClosedRange<Int>
   @Binding private var selection: Int
   
   init(title: String, unit: String? = nil, range: ClosedRange<Int>, selection: Binding<Int>) {
     self.title = title
-    self.unit = unit
     self.range = range
     self._selection = selection
 
