@@ -35,14 +35,7 @@ struct InputWeightView: View {
       Text("Weight:")
         .font(.largeTitle.bold())
       
-      Picker("Weight", selection: $weight) {
-        ForEach(weightRange, id: \.self) { value in
-          Text("\(Double(value) / 10, format: .number.precision(.fractionLength(1))) \("kg")")
-            .tag(value)
-        }
-      }
-      .pickerStyle(.wheel)
-      .frame(height: 220)
+      InputDataPicker(title: "Weight", unit: "kg", range: weightRange, selection: $weight)
       
       Spacer()
       

@@ -35,14 +35,7 @@ struct InputLeanBodyMassView: View {
       Text("Lean Body Mass:")
         .font(.largeTitle.bold())
       
-      Picker("Lean Body Mass", selection: $leanBodyMass) {
-        ForEach(leanBodyMassRange, id: \.self) { value in
-          Text("\(Double(value) / 10, format: .number.precision(.fractionLength(1))) \("kg")")
-            .tag(value)
-        }
-      }
-      .pickerStyle(.wheel)
-      .frame(height: 220)
+      InputDataPicker(title: "Lean Body Mass", unit: "kg", range: leanBodyMassRange, selection: $leanBodyMass)
       
       Spacer()
       

@@ -35,14 +35,7 @@ struct InputBmiView: View {
       Text("BMI:")
         .font(.largeTitle.bold())
       
-      Picker("BMI", selection: $bmi) {
-        ForEach(bmiRange, id: \.self) { value in
-          Text("\(Double(value) / 10, format: .number.precision(.fractionLength(1)))")
-            .tag(value)
-        }
-      }
-      .pickerStyle(.wheel)
-      .frame(height: 220)
+      InputDataPicker(title: "BMI", range: bmiRange, selection: $bmi)
       
       Spacer()
       

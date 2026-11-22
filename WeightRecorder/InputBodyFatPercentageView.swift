@@ -35,14 +35,7 @@ struct InputBodyFatPercentageView: View {
       Text("Body Fat:")
         .font(.largeTitle.bold())
       
-      Picker("Body Fat", selection: $bodyFatPercentage) {
-        ForEach(bodyFatPercentageRange, id: \.self) { value in
-          Text("\(Double(value) / 10, format: .number.precision(.fractionLength(1))) \("%")")
-            .tag(value)
-        }
-      }
-      .pickerStyle(.wheel)
-      .frame(height: 220)
+      InputDataPicker(title: "Body Fat", unit: "%", range: bodyFatPercentageRange, selection: $bodyFatPercentage)
       
       Spacer()
       
