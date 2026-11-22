@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-struct LargeControlSize: ViewModifier {
+private struct LargeControlSize: ViewModifier {
   func body(content: Content) -> some View {
-    #if os(watchOS)
-      return content
-    #else
-      return content.controlSize(.large)
-    #endif
+#if os(watchOS)
+    return content
+#else
+    return content.controlSize(.large)
+#endif
   }
 }
 
-extension View {
+private extension View {
   func largeControlSize() -> some View {
     modifier(LargeControlSize())
   }
@@ -33,12 +33,10 @@ struct PrimaryButton: View {
   }
   
   var body: some View {
-    Button(title) {
-      action()
-    }
-    .buttonStyle(.glassProminent)
-    .largeControlSize()
-    .frame(maxWidth: .infinity)
+    Button(title, action: action)
+      .buttonStyle(.glassProminent)
+      .largeControlSize()
+      .frame(maxWidth: .infinity)
   }
 }
 
