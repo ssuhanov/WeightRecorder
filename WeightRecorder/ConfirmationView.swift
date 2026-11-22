@@ -40,17 +40,11 @@ struct ConfirmationView: View {
     VStack(spacing: 24) {
       VStack(spacing: 12) {
         Text("Weight: \(inputData.weightInKilos, format: .number.precision(.fractionLength(1))) \("kg")")
-          .font(.title.bold())
-        
         Text("BMI: \(inputData.bmi, format: .number.precision(.fractionLength(1)))")
-          .font(.title.bold())
-        
         Text("Body Fat: \(inputData.bodyFatPercentage, format: .percent.precision(.fractionLength(1)))")
-          .font(.title.bold())
-        
         Text("Lean Body Mass: \(inputData.leanBodyMassInKilos, format: .number.precision(.fractionLength(1))) \("kg")")
-          .font(.title.bold())
       }
+      .font(.title.bold())
       
       if isSaving {
         ProgressView("Saving to Apple Health...")
@@ -72,17 +66,11 @@ struct ConfirmationView: View {
       
       VStack(spacing: 12) {
         Text("Weight: \(inputData.weightInKilos, format: .number.precision(.fractionLength(1))) \("kg")")
-          .font(.body)
-        
         Text("BMI: \(inputData.bmi, format: .number.precision(.fractionLength(1)))")
-          .font(.body)
-
         Text("Body Fat: \(inputData.bodyFatPercentage, format: .percent.precision(.fractionLength(1)))")
-          .font(.body)
-        
         Text("Lean Body Mass: \(inputData.leanBodyMassInKilos, format: .number.precision(.fractionLength(1))) \("kg")")
-          .font(.body)
       }
+      .font(.body)
       
       Image(systemName: "checkmark.circle.fill")
         .font(.system(size: 64))
