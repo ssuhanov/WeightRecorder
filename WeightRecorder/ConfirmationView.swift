@@ -17,6 +17,8 @@ struct ConfirmationView: View {
   
   @State private var healthStore = HealthStore()
   
+  @Environment(\.accessibilityReduceMotion) private var reduceMotion
+  
   init(inputData: InputData) {
     self.inputData = inputData
   }
@@ -89,7 +91,7 @@ struct ConfirmationView: View {
     
     do {
       try await healthStore.save(inputData: inputData)
-      isDone = true
+      withAnimation(reduceMotion ? .easeInOut : .smooth) { isDone = true }
     } catch {
       errorMessage = error.localizedDescription
       showsError = true
