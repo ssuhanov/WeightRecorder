@@ -10,6 +10,7 @@ import SwiftUI
 struct InputDataPicker: View {
   private let title: String
   private let unit: String?
+  private let unitText: String
   private let range: ClosedRange<Int>
   @Binding private var selection: Int
   
@@ -18,19 +19,18 @@ struct InputDataPicker: View {
     self.unit = unit
     self.range = range
     self._selection = selection
+
+    if let unit, !unit.isEmpty {
+      self.unitText = " \(unit)"
+    } else {
+      self.unitText = ""
+    }
   }
     
   var body: some View {
     Picker(title, selection: $selection) {
       ForEach(range, id: \.self) { value in
-        let unitText: String
-        if let unit, !unit.isEmpty {
-          unitText = " \(unit)"
-        } else {
-          unitText = ""
-        }
-        
-        return Text("\(Double(value) / 10, format: .number.precision(.fractionLength(1))) \(unitText)")
+        Text("\(Double(value) / 10, format: .number.precision(.fractionLength(1)))\(unitText)")
           .tag(value)
       }
     }
