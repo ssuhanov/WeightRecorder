@@ -17,6 +17,8 @@ struct ConfirmationView: View {
   
   @State private var healthStore = HealthStore()
   
+  @Namespace private var inputValues
+  
   @Environment(\.accessibilityReduceMotion) private var reduceMotion
   
   init(inputData: InputData) {
@@ -47,6 +49,7 @@ struct ConfirmationView: View {
     VStack(spacing: 24) {
       inputDataRepresentation
         .font(.title.bold())
+        .matchedGeometryEffect(id: "inputValues", in: inputValues)
       
       if isSaving {
         ProgressView("Saving to Apple Health...")
@@ -68,6 +71,7 @@ struct ConfirmationView: View {
       
       inputDataRepresentation
         .font(.body)
+        .matchedGeometryEffect(id: "inputValues", in: inputValues)
       
       Image(systemName: "checkmark.circle.fill")
         .font(.system(size: 64))
