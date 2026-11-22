@@ -28,34 +28,15 @@ struct InputLeanBodyMassView: View {
   }
   
   private var inputLeanBodyMassForm: some View {
-    VStack(spacing: 24) {
-      Spacer()
-      Spacer()
-      
-      Text("Lean Body Mass:")
-        .font(.largeTitle.bold())
-      
-      Picker("Lean Body Mass", selection: $leanBodyMass) {
-        ForEach(leanBodyMassRange, id: \.self) { value in
-          Text("\(Double(value) / 10, format: .number.precision(.fractionLength(1))) \("kg")")
-            .tag(value)
-        }
-      }
-      .pickerStyle(.wheel)
-      .frame(height: 220)
-      
-      Spacer()
-      
-      Button("Next") {
-        inputData.leanBodyMassInKilos = Double(leanBodyMass) / 10
-        onNext()
-      }
-      .buttonStyle(.borderedProminent)
-      .controlSize(.large)
-      .frame(maxWidth: .infinity)
-      
-      Spacer()
-      Spacer()
+    InputDataForm(
+      title: "Lean Body Mass",
+      unit: "kg",
+      range: leanBodyMassRange,
+      selection: $leanBodyMass,
+      buttonTitle: "Next"
+    ) {
+      inputData.leanBodyMassInKilos = Double(leanBodyMass) / 10
+      onNext()
     }
   }
 }

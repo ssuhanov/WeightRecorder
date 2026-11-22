@@ -40,12 +40,10 @@ struct InputBmiView: View {
       .labelsHidden()
       .frame(maxHeight: .infinity)
       
-      Button("Next") {
+      PrimaryButton("Next") {
         inputData.bmi = Double(bmi) / 10
         onNext()
       }
-      .buttonStyle(.borderedProminent)
-      .frame(maxWidth: .infinity)
     }
   }
 }

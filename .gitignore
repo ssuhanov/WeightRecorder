@@ -1,0 +1,17 @@
+# macOS metadata
+.DS_Store
+
+# Xcode personal settings, UI state, and breakpoints
+xcuserdata/
+*.xcuserstate
+
+# Local build output
+/build/
+/DerivedData/
+
+# Archives, exported apps, debug symbols, and test results
+*.xcarchive
+*.ipa
+*.dSYM
+*.dSYM.zip
+*.xcresult

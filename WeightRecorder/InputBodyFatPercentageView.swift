@@ -28,35 +28,16 @@ struct InputBodyFatPercentageView: View {
   }
   
   private var inputBodyFatPercentageForm: some View {
-    VStack(spacing: 24) {
-      Spacer()
-      Spacer()
-      
-      Text("Body Fat:")
-        .font(.largeTitle.bold())
-      
-      Picker("Body Fat", selection: $bodyFatPercentage) {
-        ForEach(bodyFatPercentageRange, id: \.self) { value in
-          Text("\(Double(value) / 10, format: .number.precision(.fractionLength(1))) \("%")")
-            .tag(value)
-        }
-      }
-      .pickerStyle(.wheel)
-      .frame(height: 220)
-      
-      Spacer()
-      
-      Button("Next") {
-        inputData.bodyFatPercentage = Double(bodyFatPercentage) / 1000
-        inputData.leanBodyMassInKilos = inputData.weightInKilos * (1 - inputData.bodyFatPercentage)
-        onNext()
-      }
-      .buttonStyle(.borderedProminent)
-      .controlSize(.large)
-      .frame(maxWidth: .infinity)
-      
-      Spacer()
-      Spacer()
+    InputDataForm(
+      title: "Body Fat",
+      unit: "%",
+      range: bodyFatPercentageRange,
+      selection: $bodyFatPercentage,
+      buttonTitle: "Next"
+    ) {
+      inputData.bodyFatPercentage = Double(bodyFatPercentage) / 1000
+      inputData.leanBodyMassInKilos = inputData.weightInKilos * (1 - inputData.bodyFatPercentage)
+      onNext()
     }
   }
 }

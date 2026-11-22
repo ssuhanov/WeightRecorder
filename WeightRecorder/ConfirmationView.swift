@@ -38,32 +38,18 @@ struct ConfirmationView: View {
   
   private var confirmationForm: some View {
     VStack(spacing: 24) {
-      VStack(spacing: 12) {
-        Text("Weight: \(inputData.weightInKilos, format: .number.precision(.fractionLength(1))) \("kg")")
-          .font(.title.bold())
-        
-        Text("BMI: \(inputData.bmi, format: .number.precision(.fractionLength(1)))")
-          .font(.title.bold())
-        
-        Text("Body Fat: \(inputData.bodyFatPercentage, format: .percent.precision(.fractionLength(1)))")
-          .font(.title.bold())
-        
-        Text("Lean Body Mass: \(inputData.leanBodyMassInKilos, format: .number.precision(.fractionLength(1))) \("kg")")
-          .font(.title.bold())
-      }
+      inputDataRepresentation
+        .font(.title.bold())
       
       if isSaving {
         ProgressView("Saving to Apple Health...")
       }
       
-      Button("Save to Health") {
+      PrimaryButton("Save to Health") {
         Task {
           await saveMeasurements()
         }
       }
-      .buttonStyle(.borderedProminent)
-      .controlSize(.large)
-      .frame(maxWidth: .infinity)
     }
     .disabled(isSaving)
   }
@@ -73,23 +59,21 @@ struct ConfirmationView: View {
       Text("Data saved to Apple Health")
         .font(.title2.bold())
       
-      VStack(spacing: 12) {
-        Text("Weight: \(inputData.weightInKilos, format: .number.precision(.fractionLength(1))) \("kg")")
-          .font(.body)
-        
-        Text("BMI: \(inputData.bmi, format: .number.precision(.fractionLength(1)))")
-          .font(.body)
-
-        Text("Body Fat: \(inputData.bodyFatPercentage, format: .percent.precision(.fractionLength(1)))")
-          .font(.body)
-        
-        Text("Lean Body Mass: \(inputData.leanBodyMassInKilos, format: .number.precision(.fractionLength(1))) \("kg")")
-          .font(.body)
-      }
+      inputDataRepresentation
+        .font(.body)
       
       Image(systemName: "checkmark.circle.fill")
         .font(.system(size: 64))
         .foregroundStyle(.green)
+    }
+  }
+  
+  private var inputDataRepresentation: some View {
+    VStack(spacing: 12) {
+      Text("Weight: \(inputData.weightInKilos, format: .number.precision(.fractionLength(1))) kg")
+      Text("BMI: \(inputData.bmi, format: .number.precision(.fractionLength(1)))")
+      Text("Body Fat: \(inputData.bodyFatPercentage, format: .percent.precision(.fractionLength(1)))")
+      Text("Lean Body Mass: \(inputData.leanBodyMassInKilos, format: .number.precision(.fractionLength(1))) kg")
     }
   }
   

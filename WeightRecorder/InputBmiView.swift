@@ -28,34 +28,14 @@ struct InputBmiView: View {
   }
   
   private var inputBmiForm: some View {
-    VStack(spacing: 24) {
-      Spacer()
-      Spacer()
-      
-      Text("BMI:")
-        .font(.largeTitle.bold())
-      
-      Picker("BMI", selection: $bmi) {
-        ForEach(bmiRange, id: \.self) { value in
-          Text("\(Double(value) / 10, format: .number.precision(.fractionLength(1)))")
-            .tag(value)
-        }
-      }
-      .pickerStyle(.wheel)
-      .frame(height: 220)
-      
-      Spacer()
-      
-      Button("Next") {
-        inputData.bmi = Double(bmi) / 10
-        onNext()
-      }
-      .buttonStyle(.borderedProminent)
-      .controlSize(.large)
-      .frame(maxWidth: .infinity)
-      
-      Spacer()
-      Spacer()
+    InputDataForm(
+      title: "BMI",
+      range: bmiRange,
+      selection: $bmi,
+      buttonTitle: "Next"
+    ) {
+      inputData.bmi = Double(bmi) / 10
+      onNext()
     }
   }
 }

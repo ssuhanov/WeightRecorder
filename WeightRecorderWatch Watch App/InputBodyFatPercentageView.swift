@@ -40,13 +40,11 @@ struct InputBodyFatPercentageView: View {
       .labelsHidden()
       .frame(maxHeight: .infinity)
       
-      Button("Next") {
+      PrimaryButton("Next") {
         inputData.bodyFatPercentage = Double(bodyFatPercentage) / 1000
         inputData.leanBodyMassInKilos = inputData.weightInKilos * (1 - inputData.bodyFatPercentage)
         onNext()
       }
-      .buttonStyle(.borderedProminent)
-      .frame(maxWidth: .infinity)
     }
   }
 }
