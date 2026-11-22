@@ -14,26 +14,34 @@ struct ConfirmationView: View {
   @State private var errorMessage: String?
   @State private var showsError = false
   @State private var isDone = false
+  @State private var showsBadge = false
   
   @State private var healthStore = HealthStore()
+  
+  @Environment(\.accessibilityReduceMotion) private var reduceMotion
   
   init(inputData: InputData) {
     self.inputData = inputData
   }
   
   var body: some View {
-    if isDone {
-      successForm
-        .navigationBarBackButtonHidden()
-    } else {
-      confirmationForm
-        .navigationBarBackButtonHidden(isSaving)
-        .alert("Couldn't save measurements", isPresented: $showsError) {
-          Button("OK", role: .cancel) {}
-        } message: {
-          Text(errorMessage ?? "Please try again.")
-        }
+    ZStack {
+      if isDone {
+        successForm
+          .navigationBarBackButtonHidden()
+          .transition(.blurReplace)
+      } else {
+        confirmationForm
+          .navigationBarBackButtonHidden(isSaving)
+          .alert("Couldn't save measurements", isPresented: $showsError) {
+            Button("OK", role: .cancel) {}
+          } message: {
+            Text(errorMessage ?? "Please try again.")
+          }
+          .transition(.blurReplace)
+      }
     }
+    .sensoryFeedback(.success, trigger: isDone)
   }
   
   private var confirmationForm: some View {
@@ -41,13 +49,15 @@ struct ConfirmationView: View {
       inputDataRepresentation
         .font(.title.bold())
       
-      if isSaving {
-        ProgressView("Saving to Apple Health...")
-      }
-      
-      PrimaryButton("Save to Health") {
+      PrimaryButton {
         Task {
           await saveMeasurements()
+        }
+      } content: {
+        if isSaving {
+          ProgressView()
+        } else {
+          Text("Save to Health")
         }
       }
     }
@@ -63,8 +73,19 @@ struct ConfirmationView: View {
         .font(.body)
       
       Image(systemName: "checkmark.circle.fill")
+        .hidden()
+        .overlay {
+          if showsBadge {
+            Image(systemName: "checkmark.circle.fill")
+              .transition(.symbolEffect(.drawOn))
+          }
+        }
         .font(.system(size: 64))
         .foregroundStyle(.green)
+    }
+    .task {
+      try? await Task.sleep(for: .milliseconds(300))
+      withAnimation { showsBadge = true }
     }
   }
   
@@ -84,7 +105,7 @@ struct ConfirmationView: View {
     
     do {
       try await healthStore.save(inputData: inputData)
-      isDone = true
+      withAnimation(reduceMotion ? .easeInOut : .smooth) { isDone = true }
     } catch {
       errorMessage = error.localizedDescription
       showsError = true
